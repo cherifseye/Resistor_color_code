@@ -26,17 +26,29 @@ bande3 = {
 }
 
 def value_resistance(resistance_value):
-   
-    digit0 = str(resistance_value)[0]
-    digit1 = str(resistance_value)[1]
-    liste_color = []
-    liste_color.append(bande1_2[digit0])
-    liste_color.append(bande1_2[digit1])
-    digit4 = str(resistance_value)[2]
-    if digit4 == '0':
-        end_digit = str(resistance_value)[2:]
-        liste_color.append(bande3[end_digit])
-    else:
-        liste_color.append(bande1_2[digit4])
+    if len(str(resistance_value)) == 2:
+        digit0 = str(resistance_value)[0]
+        digit1 = str(resistance_value)[1]
+        liste_color = []
+        liste_color.append(bande1_2[digit0])
+        liste_color.append(bande1_2[digit1])
+        liste_color.append('black')
+        return  ',  '.join(liste_color)
+    elif len(str(resistance_value)) >= 3:
+        digit0 = str(resistance_value)[0]
+        digit1 = str(resistance_value)[1]
+        liste_color = []
+        liste_color.append(bande1_2[digit0])
+        liste_color.append(bande1_2[digit1])
+        digit4 = str(resistance_value)[2]
+        if digit4 == '0':
+            end_digit = str(resistance_value)[2:]
+            liste_color.append(bande3[end_digit])
+        else:
+            liste_color.append(bande1_2[digit4])
+        return  ',  '.join(liste_color)
 
-    return  ',  '.join(liste_color)
+    else:
+        return "no code color for this resistance"
+
+    
