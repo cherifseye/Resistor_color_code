@@ -1,5 +1,5 @@
-from PyQt5.QtWidgets import QLineEdit, QMainWindow, QFrame, QPushButton, QWidget, QApplication, QHBoxLayout, QMessageBox
-from PyQt5.QtGui import QFont, QColor
+from PyQt5.QtWidgets import QLineEdit, QMainWindow, QFrame, QPushButton, QWidget, QApplication, QHBoxLayout, QMessageBox, QVBoxLayout, QLabel
+from PyQt5.QtGui import QFont, QColor, QPixmap
 from PyQt5 import QtCore 
 import sys
 from backend import *
@@ -11,12 +11,14 @@ class codesColor(QMainWindow):
         self.initUI()
         self.cWidget()
         self.UI_()
+        self.setpixmap()
         self.buttons()
+        
 
     def initUI(self):
-        self.setGeometry(300, 300, 300, 200)
+        self.resize(276, 192)
         self.setWindowTitle('Colors')
-        self.setStyleSheet("background-color:#F5F5DC;")
+        #self.setStyleSheet("background-color:#F5F5DC;")
         self.show()
     
     def cWidget(self):
@@ -29,30 +31,56 @@ class codesColor(QMainWindow):
         self.frame_gen.setFrameShadow(QFrame.Raised)
         self.hlayout = QHBoxLayout(self.centralWidget)
         self.hlayout.addWidget(self.frame_gen)
-        self.hlayout2 = QHBoxLayout(self.frame_gen)
+        self.vlayout1 = QVBoxLayout(self.frame_gen)
+        
+
+    def setpixmap(self):
+        self.frame1 = QFrame(self.frame_gen)
+        self.frame1.setFrameShape(QFrame.StyledPanel)
+        self.frame1.setFrameShadow(QFrame.Raised)
+        self.vlayout1.addWidget(self.frame1)
+
+        self.hlayout3 = QHBoxLayout(self.frame1)
+
+        self.label = QLabel(self.frame1)
+        self.label.setText("")
+        self.label.setPixmap(QPixmap("../../Downloads/loR-2.png"))
+        self.label.setObjectName("label")
+        self.hlayout3.addWidget(self.label, 0, QtCore.Qt.AlignHCenter)
 
     def buttons(self):
-        self.show_ = QPushButton(self.frame_gen)
+        self.frame2 = QFrame(self.frame_gen)
+        self.frame2.setFrameShape(QFrame.StyledPanel)
+        self.frame2.setFrameShadow(QFrame.Raised)
+        self.frame2.setMaximumSize(QtCore.QSize(16777215, 50))
+        self.vlayout1.addWidget(self.frame2)
+
+        self.show_ = QPushButton(self.frame2)
         self.show_.setText('Show')
         self.show_.setFont(QFont('Arial', 20))
         self.show_.setStyleSheet("background-color:#808080;")
         self.show_.clicked.connect(self.showed)
-        self.hlayout2.addWidget(self.show_)
-        self.lineedit = QLineEdit(self.frame_gen)
+
+        self.lineedit = QLineEdit(self.frame2)
         self.lineedit.setFont(QFont('Arial', 20))
         self.lineedit.setStyleSheet("background-color:#808080;")
-        self.hlayout2.addWidget(self.lineedit)
-        self.closed = QPushButton(self.frame_gen)
-        self.closed.setText('Close')
-        self.closed.setFont(QFont('Arial', 20))
-        self.closed.setStyleSheet("background-color:#808080;")
-        self.hlayout2.addWidget(self.closed)
+
+        self.hlayout = QHBoxLayout(self.frame2)
+        self.hlayout.addWidget(self.show_)
+        self.hlayout.addWidget(self.lineedit)
+        
+        
 
     def showed(self):
-        text = value_resistance(self.lineedit.text())
-        msgBox = QMessageBox()
-        msgBox.setStyleSheet("QLabel{color: red; font-size: 20px; font-family: Arial; font-weight: bold;}")
-        ans = msgBox.information(None, 'Result', text, QMessageBox.Ok)
+        try:
+            text = value_resistance(self.lineedit.text())
+            msgBox = QMessageBox()
+            msgBox.setStyleSheet("QLabel{color: red; font-size: 20px; font-family: Arial; font-weight: bold;}")
+            ans = msgBox.information(None, 'Result', text, QMessageBox.Ok)
+        except:
+            msgBox = QMessageBox()
+            msgBox.setStyleSheet("QLabel{color: red; font-size: 20px; font-family: Arial; font-weight: bold;}")
+            ans = msgBox.information(None, 'Result', 'Error', QMessageBox.Ok)
         
 
 

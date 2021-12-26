@@ -39,4 +39,4 @@ def value_resistance(resistance_value):
     else:
         liste_color.append(bande1_2[digit4])
 
-    return 'le code de la bande est : ' + ',  '.join(liste_color)
+    return  ',  '.join(liste_color)
